@@ -16,6 +16,8 @@ def upload(f: str) -> 'img url' 'delete url':
             headers = {'Authorization': 'Client-ID {}'.format(apikey)}
             data = {'image': f.read()}
             req = requests.post(apiurl, headers=headers, data=data)
+            if req.status_code == 415:
+                return 'Invalid File', 'Invalid File'
             json = req.json()
             if json['success']:
                 return (json['data']['link'],
